@@ -11,4 +11,4 @@ incremental = false
 
 [patch.crates-io.winit]
 git = "https://github.com/rust-windowing/winit"
-rev = "84f26b0e5ecb2b1254206af7e3a0d485c5f78836"
+rev = "65cf069211ef58335df33fd03358608d5bf254e4"

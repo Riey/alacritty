@@ -15,7 +15,7 @@ use std::sync::atomic::Ordering;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
-use winit::event::{CompositionEvent, WindowEvent};
+use winit::event::{IME, WindowEvent};
 
 use glutin::dpi::PhysicalSize;
 use glutin::event::{ElementState, Event as GlutinEvent, ModifiersState, MouseButton};
@@ -981,9 +981,10 @@ impl<N: Notify + OnResize> Processor<N> {
                         processor.key_input(input);
                     },
                     WindowEvent::ReceivedCharacter(c) => processor.received_char(c),
-                    WindowEvent::Composition(CompositionEvent::CompositionUpdate(
+                    WindowEvent::IME(IME::Preedit(
                         text,
-                        position,
+                        Some(position),
+                        _,
                     )) => processor.composition_update(text, position),
                     WindowEvent::MouseInput { state, button, .. } => {
                         processor.ctx.window.set_mouse_visible(true);
@@ -1037,7 +1038,7 @@ impl<N: Notify + OnResize> Processor<N> {
                     | WindowEvent::HoveredFile(_)
                     | WindowEvent::Touch(_)
                     | WindowEvent::Moved(_)
-                    | WindowEvent::Composition(_) => (),
+                    | WindowEvent::IME(_) => (),
                 }
             },
             GlutinEvent::Suspended { .. }

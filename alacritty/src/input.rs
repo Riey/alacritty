@@ -925,7 +925,6 @@ impl<'a, T: EventListener, A: ActionContext<T>> Processor<'a, T, A> {
 
     fn composition_cleanup(&mut self) {
         if self.composition_state {
-            self.ctx.terminal_mut().restore_cursor_position();
             self.ctx.terminal_mut().clear_line(LineClearMode::Right);
             self.composition_state = false;
         }
@@ -936,7 +935,6 @@ impl<'a, T: EventListener, A: ActionContext<T>> Processor<'a, T, A> {
 
         if !self.composition_state {
             self.composition_state = true;
-            self.ctx.terminal_mut().save_cursor_position();
         }
 
         self.ctx.terminal_mut().clear_line(LineClearMode::Right);
